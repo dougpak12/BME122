@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cassert>
 
 using namespace std;
 
@@ -98,16 +99,60 @@ public:
 		return have_sold;
 	}
 
-	bool operator==(const ArtCollection& rhs) const{
-	
+	bool operator==(const ArtCollection& rhs) const {
+		//iterate through my_artwork vectors of lhs and rhs
+		//compare each pair of values and check if they are equal
+		bool are_equal = true;
+		
+		if(my_artworksize() != rhs.my_artwork.size() || 
+		   my_sold_artwork.size() != rhs.my_sold_artwork.size())
+		   are_equal = false;
+		   
+		for(unsigned int i = 0; i < my_artwork.size() && are_equal; i++){
+			if(!my_artwork[i] == rhs.my_artwork[i])
+			are_equal = false;
+		}
+		
+		for(unsigned int i = 0; i < my_sold_artwork.size() && are_equal; i++){
+			if(!my_sold_artwork[i] == rhs.my_sold_artwork[i])
+			are_equal = false;
+		}
+		return are_equal
 	}
+	
+	//external function which will have direct access to private members of ArtCollection
+	friend ArtCollection operator+(const ArtCollection& lhs, const ArtCollection& rhs);
+		
 
 };
 
+ArtCollection operator+(const ArtCollection& lhs, const ArtCollection& rhs){
+	ArtCollection target(lhs);
+	
+	for (unsigned int i = 0; i < rhs.my_artwork.size())
+}
+
+class ArtCollectionTest{
+	void test_insert_artwork(){
+		Artwork a1 ("Igor", "Da Igor", 2020);
+		ArtCollection test_collection;
+		
+		cout<<(test_collection.insert_artwork(a1)) ?
+			"Test insert_artwork passed" : "Test insert_artwork failed" << endl;
+		assert(test_collection.my_artwork.size() == 1);
+		cout<< "Test1 my_artwork.size() passed"<< endl;
+		assert(test_collection.insert_artwork.size() == 1);
+		cout<< "Test my_artwork.size() passed"<< endl;
+		assert(test_collection.my_artwork.size() == 1);
+		cout<< "Test my_artwork.size() passed"<< endl;
+	}
+};
 //
 int main() {
 	Artwork a1, a2;
 	SoldArtwork sa1, sa2;
 	a1 = sa1;
+	ArtCollection ac1, ac2;
+	
 	return 0;
 }
